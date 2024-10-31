@@ -234,3 +234,9 @@
   
 </div>
 </details>
+
+
+
+## ERD
+
+![image](https://github.com/user-attachments/assets/69070e6f-f42f-42b8-abbf-7a43dda8c78b)
