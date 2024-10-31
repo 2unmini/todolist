@@ -18,20 +18,34 @@
 
 /api/tasks
   - Request body
+|파라미터|타입  |필수여부|설명  |
+|------|------|------|------|
+|title |String|O     |제목   |
+|writer|String|O     |작성자 |
+|desc  |String|X     |내용   |
+
   ```json
   {
-    "id": 3,
     "title": "10월 31일 뭐하지",
-    "regdate": "2024-10-30",
     "writer": "스파르타",
     "desc": "가나다라"}
   
   ```
+
+
 - Example response
+|파라미터|타입  |필수여부|설명  |
+|------|------|------|------|
+|id    |String|O     |일정 고유번호  |
+|regdate|String|O     |생성 날짜 |
+
+
   ```json
   HTTP/1.1 200
   
   {
+    "id": 3,
+    "regdate": "2024-10-30",
     "msg": "추가완료되었습니다."}
   
   ```
@@ -50,6 +64,15 @@
   ```
 
 - Example response
+
+|파라미터|타입  |필수여부|설명  |
+|------|------|------|------|
+|id    |String|O     |일정 고유번호  |
+|regdate|String|O     |생성 날짜 |
+|title |String|O     |제목   |
+|writer|String|O     |작성자 |
+|desc  |String|X     |내용   |
+
   
   ```json
   HTTP/1.1 200
@@ -84,11 +107,26 @@
 
   - Requset
 
+|파라미터|타입  |필수여부|설명  |
+|------|------|------|------|
+|id    |String|O     |일정 고유번호  |
+
+
+
   ```http
   curl --location 'https://0dc94331-bdcc-466a-a411-cb33d5c05585.mock.pstmn.io/api/tasks/1
   ```
 
 - Example response
+
+|파라미터|타입  |필수여부|설명  |
+|------|------|------|------|
+|id    |String|O     |일정 고유번호  |
+|regdate|String|O     |생성 날짜 |
+|title |String|O     |제목   |
+|writer|String|O     |작성자 |
+|desc  |String|X     |내용   |
+
 
    ```json
   HTTP/1.1 200
@@ -110,23 +148,39 @@
 /api/tasks/{task_id}
 
   - Request body
+  - 
+|파라미터|타입  |필수여부|설명  |
+|------|------|------|------|
+|id    |String|O     |일정 고유번호  |
+|title |String|O     |제목   |
+|writer|String|O     |작성자 |
+|desc  |String|X     |내용   |
+
 
   ```json
   {
     "id": 3,
     "title": "10월 31일 뭐하지",
-    "regdate": "2024-10-30",
-    "moddate": "2024-10-31"
     "writer": "스파르타",
     "desc": "가나다라"}
   ```
 
 - Example response (성공)
+
+|파라미터|타입  |필수여부|설명  |
+|------|------|------|------|
+|id    |String|O     |일정 고유번호  |
+|regdate|String|O     |생성 날짜 |
+|moddate|String|O     |수정 날짜 |
+
   
   ```json
   HTTP/1.1 200
   
   {
+    "id": 3,
+    "regdate": "2024-10-30",
+    "moddate": "2024-10-31",
     "msg": "수정 완료되었습니다."}
   ```
   
@@ -147,6 +201,12 @@
 
 /api/tasks/{task_id}
   - Requset
+    
+|파라미터|타입  |필수여부|설명  |
+|------|------|------|------|
+|id    |String|O     |일정 고유번호  |
+
+
   ```http
   curl --location 'https://0dc94331-bdcc-466a-a411-cb33d5c05585.mock.pstmn.io/api/tasks/1
   ```
