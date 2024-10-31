@@ -23,13 +23,13 @@
 |------|------|------|------|
 |title |String|O     |제목   |
 |writer|String|O     |작성자 |
-|desc  |String|X     |내용   |
+|content  |String|X     |내용   |
 
   ```json
   {
     "title": "10월 31일 뭐하지",
     "writer": "스파르타",
-    "desc": "가나다라"}
+    "content": "가나다라"}
   
   ```
 
@@ -74,7 +74,7 @@
 |regdate|String|O     |생성 날짜 |
 |title |String|O     |제목   |
 |writer|String|O     |작성자 |
-|desc  |String|X     |내용   |
+|content  |String|X     |내용   |
 
   
   ```json
@@ -86,14 +86,14 @@
         "title": "10월 29일 뭐하지",
         "regdate": "2024-10-29",
         "writer": "천준민",
-        "desc": "가나다라"
+        "content": "가나다라"
     },
     {
         "id": 2,
         "title": "10월 30일 뭐하지",
         "regdate": "2024-10-30",
         "writer": "스파르타",
-        "desc": "가나다라"
+        "content": "가나다라"
     }]
   ```
 
@@ -128,7 +128,7 @@
 |regdate|String|O     |생성 날짜 |
 |title |String|O     |제목   |
 |writer|String|O     |작성자 |
-|desc  |String|X     |내용   |
+|content  |String|X     |내용   |
 
 
    ```json
@@ -138,7 +138,7 @@
     "title": "10월 30일 뭐하지",
     "regdate": "2024-10-30",
     "writer": "천준민",
-    "desc": "가나다라"}
+    "content": "가나다라"}
   ```
 </div>
 </details>
@@ -157,7 +157,7 @@
 |id    |String|O     |일정 고유번호  |
 |title |String|O     |제목   |
 |writer|String|O     |작성자 |
-|desc  |String|X     |내용   |
+|content  |String|X     |내용   |
 
 
   ```json
@@ -165,7 +165,7 @@
     "id": 3,
     "title": "10월 31일 뭐하지",
     "writer": "스파르타",
-    "desc": "가나다라"}
+    "content": "가나다라"}
   ```
 
 - Example response (성공)
