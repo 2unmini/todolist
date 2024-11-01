@@ -5,11 +5,11 @@
 
 |Method|EndPoint|Desc|
 |------|---|---|
-|<span style="color:gray">POST</span>|/api/tasks|새로운 일정 생성|
-|<span style="color:blue">GET</span>|/api/tasks|전체 일정을 가져옴|
-|<span style="color:blue">GET</span>|/api/tasks/{task_id}|상세 일정을 가져옴|
-|<span style="color:purple">PUT</span>|/api/tasks/{task_id}|일정을 변경|
-|<span style="color:red">DELETE</span>|/api/tasks/{task_id}|일정을 삭제|
+|<span style="color:gray">POST</span>|/api/schedules|새로운 일정 생성|
+|<span style="color:blue">GET</span>|/api/schedules|전체 일정을 가져옴|
+|<span style="color:blue">GET</span>|/api/schedules/{schedule_id}|상세 일정을 가져옴|
+|<span style="color:purple">PUT</span>|/api/schedules/{schedule_id}|일정을 변경|
+|<span style="color:red">DELETE</span>|/api/schedules/{schedule_id}|일정을 삭제|
 
 
 <details>
@@ -22,13 +22,13 @@
 |파라미터|타입  |필수여부|설명  |
 |------|------|------|------|
 |title |String|O     |제목   |
-|writer|String|O     |작성자 |
+|writer|int|O     |작성자 |
 |content  |String|X     |내용   |
 
   ```json
   {
     "title": "10월 31일 뭐하지",
-    "writer": "스파르타",
+    "writer": 1,
     "content": "가나다라"}
   
   ```
@@ -39,7 +39,7 @@
   
 |파라미터|타입  |필수여부|설명  |
 |------|------|------|------|
-|id    |String|O     |일정 고유번호  |
+|schedule_id    |String|O     |일정 고유번호  |
 |regdate|String|O     |생성 날짜 |
 
 
@@ -47,7 +47,7 @@
   HTTP/1.1 200
   
   {
-    "id": 3,
+    "schedule_id": 3,
     "regdate": "2024-10-30",
     "msg": "추가완료되었습니다."}
   
@@ -59,21 +59,21 @@
 <summary>GET 전체 일정 조회</summary>
 <div markdown="1">       
 
-/api/tasks
+/api/schedules
   - Requset
     
   ```http
-  curl --location 'https://0dc94331-bdcc-466a-a411-cb33d5c05585.mock.pstmn.io/api/tasks
+  curl --location 'https://0dc94331-bdcc-466a-a411-cb33d5c05585.mock.pstmn.io/api/schedules
   ```
 
 - Example response
 
 |파라미터|타입  |필수여부|설명  |
 |------|------|------|------|
-|id    |String|O     |일정 고유번호  |
+|schedule_id    |String|O     |일정 고유번호  |
 |regdate|String|O     |생성 날짜 |
 |title |String|O     |제목   |
-|writer|String|O     |작성자 |
+|writer|int|O     |작성자 |
 |content  |String|X     |내용   |
 
   
@@ -82,17 +82,17 @@
   
   [
     {
-        "id": 1,
+        "schedule_id": 1,
         "title": "10월 29일 뭐하지",
         "regdate": "2024-10-29",
-        "writer": "천준민",
+        "writer": 1,
         "content": "가나다라"
     },
     {
-        "id": 2,
+        "schedule_id": 2,
         "title": "10월 30일 뭐하지",
         "regdate": "2024-10-30",
-        "writer": "스파르타",
+        "writer": 1,
         "content": "가나다라"
     }]
   ```
@@ -106,38 +106,38 @@
 
 <div markdown="1">       
 
-/api/tasks/{task_id}
+/api/schedules/{schedule_id}
 
   - Requset
 
 |파라미터|타입  |필수여부|설명  |
 |------|------|------|------|
-|id    |String|O     |일정 고유번호  |
+|schedule_id    |String|O     |일정 고유번호  |
 
 
 
   ```http
-  curl --location 'https://0dc94331-bdcc-466a-a411-cb33d5c05585.mock.pstmn.io/api/tasks/1
+  curl --location 'https://0dc94331-bdcc-466a-a411-cb33d5c05585.mock.pstmn.io/api/schedules/1
   ```
 
 - Example response
 
 |파라미터|타입  |필수여부|설명  |
 |------|------|------|------|
-|id    |String|O     |일정 고유번호  |
+|schedule_id    |String|O     |일정 고유번호  |
 |regdate|String|O     |생성 날짜 |
 |title |String|O     |제목   |
-|writer|String|O     |작성자 |
+|writer|int|O     |작성자 |
 |content  |String|X     |내용   |
 
 
    ```json
   HTTP/1.1 200
   {
-    "id": 1,
+    "schedule_id": 1,
     "title": "10월 30일 뭐하지",
     "regdate": "2024-10-30",
-    "writer": "천준민",
+    "writer": 1,
     "content": "가나다라"}
   ```
 </div>
@@ -148,23 +148,23 @@
 <summary>PUT 일정 변경</summary>
 <div markdown="1">       
 
-/api/tasks/{task_id}
+/api/schedules/{schedule_id}
 
   - Request body
     
 |파라미터|타입  |필수여부|설명  |
 |------|------|------|------|
-|id    |String|O     |일정 고유번호  |
+|schedule_id    |String|O     |일정 고유번호  |
 |title |String|O     |제목   |
-|writer|String|O     |작성자 |
+|writer|int|O     |작성자 |
 |content  |String|X     |내용   |
 
 
   ```json
   {
-    "id": 3,
+    "schedule_id": 3,
     "title": "10월 31일 뭐하지",
-    "writer": "스파르타",
+    "writer": 1,
     "content": "가나다라"}
   ```
 
@@ -172,7 +172,7 @@
 
 |파라미터|타입  |필수여부|설명  |
 |------|------|------|------|
-|id    |String|O     |일정 고유번호  |
+|schedule_id    |String|O     |일정 고유번호  |
 |regdate|String|O     |생성 날짜 |
 |moddate|String|O     |수정 날짜 |
 
@@ -181,7 +181,7 @@
   HTTP/1.1 200
   
   {
-    "id": 3,
+    "schedule_id": 3,
     "regdate": "2024-10-30",
     "moddate": "2024-10-31",
     "msg": "수정 완료되었습니다."}
@@ -202,16 +202,16 @@
 <summary>DELETE 일정 삭제</summary>
 <div markdown="1">       
 
-/api/tasks/{task_id}
+/api/schedules/{schedule_id}
   - Requset
     
 |파라미터|타입  |필수여부|설명  |
 |------|------|------|------|
-|id    |String|O     |일정 고유번호  |
+|schedule_id    |String|O     |일정 고유번호  |
 
 
   ```http
-  curl --location 'https://0dc94331-bdcc-466a-a411-cb33d5c05585.mock.pstmn.io/api/tasks/1
+  curl --location 'https://0dc94331-bdcc-466a-a411-cb33d5c05585.mock.pstmn.io/api/schedules/1
   ```
 - Example response (성공)
 - 
@@ -239,4 +239,4 @@
 
 ## ERD
 
-![image](https://github.com/user-attachments/assets/69070e6f-f42f-42b8-abbf-7a43dda8c78b)
+![캡처](https://github.com/user-attachments/assets/37a91572-ac53-428a-91c8-4edd5becf9a5)
