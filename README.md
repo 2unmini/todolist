@@ -239,4 +239,4 @@
 
 ## ERD
 
-![캡처](https://github.com/user-attachments/assets/37a91572-ac53-428a-91c8-4edd5becf9a5)
+![캡처](https://github.com/user-attachments/assets/bb32811a-a22c-4a25-ad0f-b5349ecdba41)
