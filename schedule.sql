@@ -2,7 +2,7 @@ user 테이블 생성
 CREATE TABLE user (
   `user_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(30) NOT NULL,
-  PRIMARY KEY (`id`));
+  PRIMARY KEY (`user_id`));
 
 schedule 테이블 생성
 
