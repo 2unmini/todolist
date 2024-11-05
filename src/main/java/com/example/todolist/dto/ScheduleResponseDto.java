@@ -3,7 +3,6 @@ package com.example.todolist.dto;
 import lombok.Getter;
 
 import java.time.LocalDate;
-
 @Getter
 public class ScheduleResponseDto {
     private Long scheduleId; // schedule 테이블의 식별자 값
@@ -19,6 +18,5 @@ public class ScheduleResponseDto {
         this.userName = userName;
         this.content = content;
         this.createdAt = createdAt;
-
     }
 }

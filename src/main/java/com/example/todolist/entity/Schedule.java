@@ -1,9 +1,12 @@
 package com.example.todolist.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class Schedule {
     private Long scheduleId; // schedule 테이블의 식별자 값
@@ -22,5 +25,13 @@ public class Schedule {
         this.createdAt = createdAt;
     }
 
-
+    public Schedule(long scheduleId, String title, String userName, String content, String createdAt, String updatedAt) {
+        this.scheduleId=scheduleId;
+        this.title = title;
+        this.userName = userName;
+        this.content = content;
+        this.password = password;
+        this.createdAt = LocalDate.parse(createdAt);
+        this.updatedAt = LocalDate.parse(updatedAt);
+    }
 }

@@ -7,6 +7,7 @@ import com.example.todolist.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -22,5 +23,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         Schedule schedule = new Schedule(requestDto.getTitle(), requestDto.getUserName(), requestDto.getContent(), requestDto.getPassword(), LocalDate.now());
         return scheduleRepository.saveSchedule(schedule);
 
+    }
+
+    @Override
+    public List<ScheduleResponseDto> findAllSchedules() {
+        List<ScheduleResponseDto> allSchedules = scheduleRepository.findAllSchedules();
+        return allSchedules;
     }
 }
