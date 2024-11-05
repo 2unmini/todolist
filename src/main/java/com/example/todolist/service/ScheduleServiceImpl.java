@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -29,5 +30,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     public List<ScheduleResponseDto> findAllSchedules() {
         List<ScheduleResponseDto> allSchedules = scheduleRepository.findAllSchedules();
         return allSchedules;
+    }
+
+    @Override
+    public Optional<Schedule> findScheduleById(Long id) {
+        return scheduleRepository.findScheduleById(id);
+
     }
 }

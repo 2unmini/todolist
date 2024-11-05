@@ -2,11 +2,13 @@ package com.example.todolist.controller;
 
 import com.example.todolist.dto.ScheduleRequestDto;
 import com.example.todolist.dto.ScheduleResponseDto;
+import com.example.todolist.entity.Schedule;
 import com.example.todolist.service.ScheduleService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api")
@@ -24,6 +26,10 @@ public class ScheduleController {
     @GetMapping("/schedules")
     public List<ScheduleResponseDto> findAllSchedules() {
         return scheduleService.findAllSchedules();
+    }
+    @GetMapping("/schedules/{id}")
+    public Optional<Schedule> findScheduleById(@PathVariable Long id) {
+        return scheduleService.findScheduleById(id);
     }
 
 }

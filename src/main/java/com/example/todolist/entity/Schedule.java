@@ -25,13 +25,11 @@ public class Schedule {
         this.createdAt = createdAt;
     }
 
-    public Schedule(long scheduleId, String title, String userName, String content, String createdAt, String updatedAt) {
+    public Schedule(long scheduleId, String title, String userName, String content, LocalDate createdAt) {
         this.scheduleId=scheduleId;
         this.title = title;
         this.userName = userName;
         this.content = content;
-        this.password = password;
-        this.createdAt = LocalDate.parse(createdAt);
-        this.updatedAt = LocalDate.parse(updatedAt);
+        this.createdAt = createdAt;
     }
 }
