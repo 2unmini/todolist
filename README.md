@@ -262,4 +262,4 @@
 
 ## ERD
 
-![ERD](https://github.com/user-attachments/assets/dabf5208-8aee-4053-b0c8-089697f135d6)
+![ERD](https://github.com/user-attachments/assets/6c734400-9cce-4214-9909-4c911940f832)
