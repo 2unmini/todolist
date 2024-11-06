@@ -42,12 +42,12 @@
   
 |파라미터|타입  |필수여부|설명  |
 |------|------|------|------|
-|schedule_id |String|O     |일정 고유번호  |
+|schedule_id |INT|O     |일정 고유번호  |
 |title |String|O     |제목   |
 |username|String|O     |작성자 |
 |content  |String|X     |내용   |
-|created_At|String|O     |생성 날짜 |
-|updated_At|String|X     |수정 날짜 |
+|created_At|DATE|O     |생성 날짜 |
+|updated_At|DATE|X     |수정 날짜 |
 
 
 
@@ -81,12 +81,12 @@
 
 |파라미터|타입  |필수여부|설명  |
 |------|------|------|------|
-|schedule_id |String|O     |일정 고유번호  |
+|schedule_id |INT|O     |일정 고유번호  |
 |title |String|O     |제목   |
 |username|String|O     |작성자 |
 |content  |String|X     |내용   |
-|created_At|String|O     |생성 날짜 |
-|updated_At|String|X     |수정 날짜 |
+|created_At|DATE|O     |생성 날짜 |
+|updated_At|DATE|X     |수정 날짜 |
 
   
   ```json
@@ -125,7 +125,7 @@
 
 |파라미터|타입  |필수여부|설명  |
 |------|------|------|------|
-|schedule_id    |String|O     |일정 고유번호  |
+|schedule_id    |INT|O     |일정 고유번호  |
 
 
 
@@ -137,12 +137,12 @@
 
 |파라미터|타입  |필수여부|설명  |
 |------|------|------|------|
-|schedule_id |String|O     |일정 고유번호  |
+|schedule_id |INT|O     |일정 고유번호  |
 |title |String|O     |제목   |
 |username|String|O     |작성자 |
 |content  |String|X     |내용   |
-|created_At|String|O     |생성 날짜 |
-|updated_At|String|X     |수정 날짜 |
+|created_At|DATE|O     |생성 날짜 |
+|updated_At|DATE|X     |수정 날짜 |
 
 
    ```json
@@ -191,12 +191,12 @@
 
 |파라미터|타입  |필수여부|설명  |
 |------|------|------|------|
-|schedule_id |String|O     |일정 고유번호  |
+|schedule_id |INT|O     |일정 고유번호  |
 |title |String|O     |제목   |
 |username|String|O     |작성자 |
 |content  |String|X     |내용   |
-|created_At|String|O     |생성 날짜 |
-|updated_At|String|O     |수정 날짜 |
+|created_At|DATE|O     |생성 날짜 |
+|updated_At|DATE|O     |수정 날짜 |
   
   ```json
   HTTP/1.1 200
@@ -230,7 +230,7 @@
     
 |파라미터|타입  |필수여부|설명  |
 |------|------|------|------|
-|schedule_id    |String|O     |일정 고유번호  |
+|schedule_id    |INT|O     |일정 고유번호  |
 
 
   ```http
@@ -259,7 +259,252 @@
 </details>
 
 
+## 도전과제 일정관리 API 명세서
+
+<details>
+<summary>POST 사용자 생성</summary>
+<div markdown="1">       
+
+/api/users
+- Request body
+
+| 파라미터 |타입  |필수여부| 설명   |
+|---|------|------|------|
+| username |String|O     | 작성자  |
+| email |String|O     | 작성자  |
+  ```json
+  {
+    "username": "작성자",
+    "email" : "1234@naver.com"
+}
+  
+  ```
+-Example Response
+
+| 파라미터       | 타입     |필수여부|설명  |
+|------------|--------|------|------|
+| user_id    | INT    |O     |일정 고유번호  |
+| username | String |O     | 작성자  |
+| email | String |O     | 작성자  |
+| created_At | DATE |O     |생성 날짜 |
+| updated_At | DATE |X     |수정 날짜 |
+
+```json
+  {
+    "schedule_id": 3,
+    "title" : "제목",
+    "username": "작성자" ,
+    "content": "내용",
+    "created_At": "2024-10-30"
+    }
+```
+</div>
+</details>
+
+
+<details>
+<summary>POST 일정 생성</summary>
+<div markdown="1">       
+
+/api/schedules
+- Request body
+
+| 파라미터     | 타입     |필수여부|설명  |
+|----------|--------|------|------|
+| title    | String |O     |제목   |
+| user_id  | INT    |O     |작성자 |
+| content  | String |X     |내용   |
+| password | String |O     |비밀번호  |
+
+  ```json
+  {
+    "title": "제목",
+    "username": "작성자" ,
+    "content": "내용",
+    "password": "비밀번호"
+}
+```
+- Example Response
+
+|파라미터| 타입     |필수여부|설명  |
+|------|--------|------|------|
+|schedule_id | INT    |O     |일정 고유번호  |
+| user_id  | INT    |O     |작성자 |
+|title | String |O     |제목   |
+|content  | String |X     |내용   |
+|created_At| DATE |O     |생성 날짜 |
+|updated_At| DATE |X     |수정 날짜 |
+
+  ```json
+  {
+    "schedule_id": 1,
+    "user_id": 1,
+    "title" : "제목",
+    "content": "내용",
+    "created_At": "2024-11-06"
+    }
+```
+</div>
+</details>
+
+<details>
+<summary>GET 전체 일정 조회</summary>
+<div markdown="1">       
+
+/api/schedules
+- Requset
+
+    ```
+  api/schedules 
+  ```
+
+- Example response
+
+|파라미터| 타입     |필수여부|설명  |
+|------|--------|------|------|
+|schedule_id | INT    |O     |일정 고유번호  |
+| user_id  | INT    |O     |작성자 |
+|title | String |O     |제목   |
+|content  | String |X     |내용   |
+|created_At| DATE |O     |생성 날짜 |
+|updated_At| DATE |X     |수정 날짜 |
+
+  ```json
+ [ 
+  {
+      "schedule_id": 1,
+      "user_id": 1,
+      "title" : "제목",
+      "content": "내용",
+      "created_At": "2024-11-06"
+    },
+  {
+    "schedule_id": 2,
+    "user_id": 2,
+    "title" : "제목2",
+    "content": "내용2",
+    "created_At": "2024-11-07"
+  }
+]
+```
+</div>
+</details>
+
+<details>
+<summary>GET 상세 일정 조회</summary>
+
+<div markdown="1">       
+
+/api/schedules/{schedule_id}
+- Requset
+ ```
+  api/schedules/1 
+  ```
+
+ |파라미터| 타입  |필수여부|설명  |
+ |------|-----|------|------|
+ |schedule_id    | INT |O     |일정 고유번호  |
+
+- Example Response
+
+|파라미터| 타입     |필수여부|설명  |
+|------|--------|------|------|
+|schedule_id | INT    |O     |일정 고유번호  |
+| user_id  | INT    |O     |작성자 |
+|title | String |O     |제목   |
+|content  | String |X     |내용   |
+|created_At| DATE |O     |생성 날짜 |
+|updated_At| DATE |X     |수정 날짜 |
+
+  ```json
+  {
+    "schedule_id": 1,
+    "user_id": 1,
+    "title" : "제목",
+    "content": "내용",
+    "created_At": "2024-11-06"
+    }
+```
+</div>
+</details>
+
+<details>
+<summary>PUT 일정 변경</summary>
+<div markdown="1">       
+
+/api/schedules/{schedule_id}
+
+- Request
+ ```
+  api/schedules/1 
+  ```
+
+ | 파라미터     | 타입     |필수여부|설명  |
+ |----------|--------|------|------|
+ | title    | String |O     |제목   |
+ | content  | String |X     |내용   |
+ | password | String |O     |비밀번호   |
+
+ ```json
+  {
+    "title" : "수정",
+    "content": "수정내용",
+    "password": "비밀번호"
+}
+```
+- Example response (성공)
+
+|파라미터| 타입     |필수여부|설명  |
+|------|--------|------|------|
+|schedule_id | INT    |O     |일정 고유번호  |
+| user_id  | INT    |O     |작성자 |
+|title | String |O     |제목   |
+|content  | String |X     |내용   |
+|created_At| DATE |O     |생성 날짜 |
+|updated_At| DATE |X     |수정 날짜 |
+
+  ```json
+  {
+    "schedule_id": 1,
+    "user_id": 1,
+    "title" : "제목",
+    "content": "내용",
+    "created_At": "2024-11-06",
+    "updated_At": "2024-11-07"
+    }
+```
+</div>
+</details>
+
+<details>
+<summary>DELETE 일정 삭제</summary>
+<div markdown="1">       
+
+/api/schedules/{schedule_id}
+- Requset
+ ```
+  api/schedules/1 
+  ```
+
+|파라미터| 타입  |필수여부|설명  |
+ |------|-----|------|------|
+|schedule_id    | INT |O     |일정 고유번호  |
+
+- Example response (성공)
+```
+
+```
+</div>
+</details>
+
+
+
+
 
 ## ERD
 
 ![ERD](https://github.com/user-attachments/assets/6c734400-9cce-4214-9909-4c911940f832)
+
+## 도전과제 ERD
+
+![도전 ERD](https://github.com/user-attachments/assets/a57cf16f-f340-4fd6-ac3b-91a8c930221a)
