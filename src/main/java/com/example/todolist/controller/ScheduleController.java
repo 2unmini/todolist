@@ -20,26 +20,30 @@ public class ScheduleController {
         this.scheduleService = scheduleService;
     }
 
-    @PostMapping("/schedules") // 일정 생성 기능
+    @PostMapping("/schedules") // 일정 생성 요청 API
     public ScheduleResponseDto createSchedule(@RequestBody ScheduleRequestDto requestDto) {
         return scheduleService.saveSchedule(requestDto);
     }
-    @GetMapping("/schedules")
+
+    @GetMapping("/schedules") // 일정 전체 조회 요청 API
     public List<ScheduleResponseDto> findAllSchedules() {
         return scheduleService.findAllSchedules();
     }
-    @GetMapping("/schedules/{id}")
+
+    @GetMapping("/schedules/{id}") // 일정 단건 조회 요청 API
     public Optional<Schedule> findScheduleById(@PathVariable Long id) {
         return scheduleService.findScheduleById(id);
     }
-    @PutMapping("/schedules/{id}")
-    public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable Long id ,@RequestBody ScheduleRequestDto requestDto) {
+
+    @PutMapping("/schedules/{id}") //일정 수정 요청 API
+    public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
         return new ResponseEntity<>(scheduleService.updateSchedule(id, requestDto), HttpStatus.OK);
 
     }
-    @DeleteMapping("/schedules/{id}")
-    public void deleteSchedule(@PathVariable Long id ,@RequestBody ScheduleRequestDto requestDto) {
-        scheduleService.deleteSchedule(id,requestDto.getPassword());
+
+    @DeleteMapping("/schedules/{id}") // 일정 삭제 요청 API
+    public void deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
+        scheduleService.deleteSchedule(id, requestDto.getPassword());
     }
 
 }

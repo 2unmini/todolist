@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDate;
+
 @AllArgsConstructor
 @Getter
 public class ScheduleResponseDto {
@@ -31,7 +32,8 @@ public class ScheduleResponseDto {
         this.createdAt = schedule.getCreatedAt();
         this.updatedAt = schedule.getUpdatedAt();
     }
-    public ScheduleResponseDto(long scheduleId, String title, String userName, String content, LocalDate createdAt,LocalDate updatedAt)  {
+
+    public ScheduleResponseDto(long scheduleId, String title, String userName, String content, LocalDate createdAt, LocalDate updatedAt) {
         this.scheduleId = scheduleId;
         this.title = title;
         this.userName = userName;

@@ -30,7 +30,7 @@ public class JdbcScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public ScheduleResponseDto saveSchedule(Schedule schedule) {
+    public ScheduleResponseDto saveSchedule(Schedule schedule) { // DB에 INSERT
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 
         jdbcInsert.withTableName("schedule").usingGeneratedKeyColumns("schedule_id");
@@ -46,7 +46,7 @@ public class JdbcScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public List<ScheduleResponseDto> findAllSchedules() {
+    public List<ScheduleResponseDto> findAllSchedules() { //DB에 select
 
         return jdbcTemplate.query("select * from schedule ", scheduleRowMapper());
 
@@ -54,19 +54,19 @@ public class JdbcScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public Optional<Schedule> findScheduleById(Long id) {
+    public Optional<Schedule> findScheduleById(Long id) { //DB에 맞는 조건을 걸어 select
         List<Schedule> result = jdbcTemplate.query("select * from schedule where schedule_id = ?", scheduleRowMapper2(), id);
         return result.stream().findAny();
     }
 
     @Override
-    public int  updateSchedule(Long id, String title ,String userName, String content, String password) {
-         return jdbcTemplate.update("update schedule set title =?, username = ?,content =? ,updated_at = ?  where schedule_id =? and password = ?",title,userName,content, LocalDate.now(),id,password);
+    public int updateSchedule(Long id, String title, String userName, String content, String password) { //DB에 맞는 조건을 걸어 update
+        return jdbcTemplate.update("update schedule set title =?, username = ?,content =? ,updated_at = ?  where schedule_id =? and password = ?", title, userName, content, LocalDate.now(), id, password);
     }
 
     @Override
-    public void deleteSchedule(Long id ,String password) {
-        jdbcTemplate.update("delete from schedule where schedule_id = ? and password = ?" ,id,password);
+    public void deleteSchedule(Long id, String password) { //DB에 맞는 조건을 걸어 delete
+        jdbcTemplate.update("delete from schedule where schedule_id = ? and password = ?", id, password);
     }
 
 

@@ -22,9 +22,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public ScheduleResponseDto saveSchedule(ScheduleRequestDto requestDto) {
+    public ScheduleResponseDto saveSchedule(ScheduleRequestDto requestDto) { // 요청 BODY -> Entity로 변환 후 repository로 전달
         Schedule schedule = new Schedule(requestDto.getTitle(), requestDto.getUserName(), requestDto.getContent(), requestDto.getPassword(), LocalDate.now());
-        return scheduleRepository.saveSchedule(schedule);
+        return scheduleRepository.saveSchedule(schedule); //repository에서 받은 응답데이터를 controller로 전달
 
     }
 
@@ -35,28 +35,28 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Optional<Schedule> findScheduleById(Long id) {
-        return scheduleRepository.findScheduleById(id);
+    public Optional<Schedule> findScheduleById(Long id) { // 받은 @PathVariable id를  repository로 전달
+        return scheduleRepository.findScheduleById(id);// repository에서 받은 응답데이터를 controller로 전달
 
     }
 
     @Override
-    public ScheduleResponseDto updateSchedule(Long id,ScheduleRequestDto scheduleRequestDto) {
-        if(scheduleRequestDto.getTitle()==null || scheduleRequestDto.getContent()==null||scheduleRequestDto.getPassword()==null) {
+    public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto scheduleRequestDto) { // 요청 BODY -> Entity로 변환 후 repository로 전달
+        if (scheduleRequestDto.getTitle() == null || scheduleRequestDto.getContent() == null || scheduleRequestDto.getPassword() == null) { // 각 값이 null인지 검사
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        Schedule schedule =new Schedule(id,scheduleRequestDto.getTitle(),scheduleRequestDto.getUserName(),scheduleRequestDto.getContent(),scheduleRequestDto.getPassword(),LocalDate.now());
-        int updateRow = scheduleRepository.updateSchedule(schedule.getScheduleId(),schedule.getTitle(),schedule.getUserName(),schedule.getContent(),schedule.getPassword());
-        if(updateRow==0){
-            throw  new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Schedule schedule = new Schedule(id, scheduleRequestDto.getTitle(), scheduleRequestDto.getUserName(), scheduleRequestDto.getContent(), scheduleRequestDto.getPassword(), LocalDate.now());
+        int updateRow = scheduleRepository.updateSchedule(schedule.getScheduleId(), schedule.getTitle(), schedule.getUserName(), schedule.getContent(), schedule.getPassword());
+        if (updateRow == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND); // repository에서 응답된 값이 0인지 확인 (0이 아니어야 한다.)
         }
-        schedule=scheduleRepository.findScheduleById(id).get();
-        return new ScheduleResponseDto(schedule);
+        schedule = scheduleRepository.findScheduleById(id).get(); // 0이 아니라면 id를 repository로 전달 후 그 값을 엔티티로 저장
+        return new ScheduleResponseDto(schedule); // entity를 응답데이터로 변환 후 controller로 전달
     }
 
     @Override
-    public void deleteSchedule(Long id ,String password) {
-        scheduleRepository.deleteSchedule(id,password);
+    public void deleteSchedule(Long id, String password) { // 요청 BODY ->  repository로 전달
+        scheduleRepository.deleteSchedule(id, password);
     }
 
 }
