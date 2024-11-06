@@ -46,12 +46,17 @@ public class ScheduleServiceImpl implements ScheduleService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         Schedule schedule =new Schedule(id,scheduleRequestDto.getTitle(),scheduleRequestDto.getUserName(),scheduleRequestDto.getContent(),scheduleRequestDto.getPassword(),LocalDate.now());
-        int updateRow = scheduleRepository.updateSchedule(schedule.getScheduleId(),schedule.getTitle(),schedule.getUserName(),schedule.getContent());
+        int updateRow = scheduleRepository.updateSchedule(schedule.getScheduleId(),schedule.getTitle(),schedule.getUserName(),schedule.getContent(),schedule.getPassword());
         if(updateRow==0){
             throw  new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         schedule=scheduleRepository.findScheduleById(id).get();
         return new ScheduleResponseDto(schedule);
+    }
+
+    @Override
+    public void deleteSchedule(Long id ,String password) {
+        scheduleRepository.deleteSchedule(id,password);
     }
 
 }

@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +36,10 @@ public class ScheduleController {
     public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable Long id ,@RequestBody ScheduleRequestDto requestDto) {
         return new ResponseEntity<>(scheduleService.updateSchedule(id, requestDto), HttpStatus.OK);
 
+    }
+    @DeleteMapping("/schedules/{id}")
+    public void deleteSchedule(@PathVariable Long id ,@RequestBody ScheduleRequestDto requestDto) {
+        scheduleService.deleteSchedule(id,requestDto.getPassword());
     }
 
 }

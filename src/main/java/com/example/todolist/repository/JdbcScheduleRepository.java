@@ -60,9 +60,15 @@ public class JdbcScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public int  updateSchedule(Long id, String title ,String userName, String content) {
-         return jdbcTemplate.update("update schedule set title =?, username = ?,content =? ,updated_at = ?  where schedule_id =?",title,userName,content, LocalDate.now(),id);
+    public int  updateSchedule(Long id, String title ,String userName, String content, String password) {
+         return jdbcTemplate.update("update schedule set title =?, username = ?,content =? ,updated_at = ?  where schedule_id =? and password = ?",title,userName,content, LocalDate.now(),id,password);
     }
+
+    @Override
+    public void deleteSchedule(Long id ,String password) {
+        jdbcTemplate.update("delete from schedule where schedule_id = ? and password = ?" ,id,password);
+    }
+
 
     private RowMapper<Schedule> scheduleRowMapper2() {
         return new RowMapper<Schedule>() {
