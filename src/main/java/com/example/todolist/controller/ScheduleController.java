@@ -4,6 +4,8 @@ import com.example.todolist.dto.ScheduleRequestDto;
 import com.example.todolist.dto.ScheduleResponseDto;
 import com.example.todolist.entity.Schedule;
 import com.example.todolist.service.ScheduleService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -30,6 +32,11 @@ public class ScheduleController {
     @GetMapping("/schedules/{id}")
     public Optional<Schedule> findScheduleById(@PathVariable Long id) {
         return scheduleService.findScheduleById(id);
+    }
+    @PutMapping("/schedules/{id}")
+    public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable Long id ,@RequestBody ScheduleRequestDto requestDto) {
+        return new ResponseEntity<>(scheduleService.updateSchedule(id, requestDto), HttpStatus.OK);
+
     }
 
 }

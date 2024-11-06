@@ -2,15 +2,19 @@ package com.example.todolist.repository;
 
 import com.example.todolist.dto.ScheduleResponseDto;
 import com.example.todolist.entity.Schedule;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.DataSource;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +59,11 @@ public class JdbcScheduleRepository implements ScheduleRepository {
         return result.stream().findAny();
     }
 
+    @Override
+    public int  updateSchedule(Long id, String title ,String userName, String content) {
+         return jdbcTemplate.update("update schedule set title =?, username = ?,content =? ,updated_at = ?  where schedule_id =?",title,userName,content, LocalDate.now(),id);
+    }
+
     private RowMapper<Schedule> scheduleRowMapper2() {
         return new RowMapper<Schedule>() {
             @Override
@@ -64,7 +73,8 @@ public class JdbcScheduleRepository implements ScheduleRepository {
                         rs.getString("title"),
                         rs.getString("username"),
                         rs.getString("content"),
-                        rs.getDate("created_at").toLocalDate()
+                        rs.getDate("created_at").toLocalDate(),
+                        Optional.ofNullable(rs.getDate("updated_at")).map(Date::toLocalDate).orElse(null)
                 );
             }
         };
@@ -79,7 +89,8 @@ public class JdbcScheduleRepository implements ScheduleRepository {
                         rs.getString("title"),
                         rs.getString("username"),
                         rs.getString("content"),
-                        rs.getDate("created_at").toLocalDate()
+                        rs.getDate("created_at").toLocalDate(),
+                        Optional.ofNullable(rs.getDate("updated_at")).map(Date::toLocalDate).orElse(null)
                 );
             }
         };
