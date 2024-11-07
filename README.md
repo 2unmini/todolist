@@ -259,7 +259,7 @@
 </details>
 
 
-## 도전과제 일정관리 API 명세서
+## 도전과제 일정관리 API
 
 <details>
 <summary>POST 사용자 생성</summary>
@@ -268,10 +268,10 @@
 /api/users
 - Request body
 
-| 파라미터 |타입  |필수여부| 설명   |
-|---|------|------|------|
-| username |String|O     | 작성자  |
-| email |String|O     | 작성자  |
+| 파라미터 |타입  |필수여부| 설명  |
+|---|------|------|-----|
+| username |String|O     | 작성자 |
+| email |String|O     | 이메일 |
   ```json
   {
     "username": "작성자",
@@ -281,17 +281,54 @@
   ```
 -Example Response
 
-| 파라미터       | 타입     |필수여부|설명  |
-|------------|--------|------|------|
-| user_id    | INT    |O     |일정 고유번호  |
-| username | String |O     | 작성자  |
-| email | String |O     | 작성자  |
-| created_At | DATE |O     |생성 날짜 |
-| updated_At | DATE |X     |수정 날짜 |
+| 파라미터       | 타입     |필수여부| 설명       |
+|------------|--------|------|----------|
+| user_id    | INT    |O     | 작성자 고유번호 |
+| username | String |O     | 작성자      |
+| email | String |O     | 이메일      |
+| created_At | String |O     | 생성 날짜    |
+| updated_At | String |X     | 수정 날짜    |
 
 ```json
   {
-    "schedule_id": 3,
+    "user_id": 3,
+    "username": "작성자" ,
+    "content": "내용",
+    "created_At": "2024-10-30",
+    "updated_At": null
+    }
+```
+</div>
+</details>
+
+<details>
+<summary>GET 사용자 조회</summary>
+<div markdown="1">       
+
+/api/schedules/{schedule_id}
+- Requset
+ ```
+  api/schedules/1 
+  ```
+
+| 파라미터    | 타입     |필수여부| 설명   |
+|---------|--------|------|------|
+| user_id | INT    |O     | 작성자 고유번호  |
+
+
+-Example Response
+
+| 파라미터       | 타입     |필수여부| 설명       |
+|------------|--------|------|----------|
+| user_id    | INT    |O     | 작성자 고유번호 |
+| username | String |O     | 작성자      |
+| email | String |O     | 이메일      |
+| created_At | String |O     | 생성 날짜    |
+| updated_At | String |X     | 수정 날짜    |
+
+```json
+  {
+    "user_id": 3,
     "title" : "제목",
     "username": "작성자" ,
     "content": "내용",
@@ -302,6 +339,8 @@
 </details>
 
 
+
+
 <details>
 <summary>POST 일정 생성</summary>
 <div markdown="1">       
@@ -310,16 +349,16 @@
 - Request body
 
 | 파라미터     | 타입     |필수여부|설명  |
-|----------|--------|------|------|
-| title    | String |O     |제목   |
-| user_id  | INT    |O     |작성자 |
-| content  | String |X     |내용   |
-| password | String |O     |비밀번호  |
+|----------|--------|-----|------|
+| title    | String |O    |제목   |
+| user_id  | INT    |O    |작성자 고유번호 |
+| content  | String |O     |내용   |
+| password | String |O    |비밀번호  |
 
   ```json
   {
     "title": "제목",
-    "username": "작성자" ,
+    "userId": 1,
     "content": "내용",
     "password": "비밀번호"
 }
@@ -329,11 +368,11 @@
 |파라미터| 타입     |필수여부|설명  |
 |------|--------|------|------|
 |schedule_id | INT    |O     |일정 고유번호  |
-| user_id  | INT    |O     |작성자 |
+| user_id  | INT    |O     |작성자 고유번호 |
 |title | String |O     |제목   |
-|content  | String |X     |내용   |
-|created_At| DATE |O     |생성 날짜 |
-|updated_At| DATE |X     |수정 날짜 |
+|content  | String |O     |내용   |
+|created_At| String |O     |생성 날짜 |
+|updated_At| String |X     |수정 날짜 |
 
   ```json
   {
@@ -363,11 +402,11 @@
 |파라미터| 타입     |필수여부|설명  |
 |------|--------|------|------|
 |schedule_id | INT    |O     |일정 고유번호  |
-| user_id  | INT    |O     |작성자 |
+| user_id  | INT    |O     |작성자 고유번호 |
 |title | String |O     |제목   |
-|content  | String |X     |내용   |
-|created_At| DATE |O     |생성 날짜 |
-|updated_At| DATE |X     |수정 날짜 |
+|content  | String |O     |내용   |
+|created_At| String |O     |생성 날짜 |
+|updated_At| String |X     |수정 날짜 |
 
   ```json
  [ 
@@ -405,16 +444,16 @@
  |------|-----|------|------|
  |schedule_id    | INT |O     |일정 고유번호  |
 
-- Example Response
+- Example Response (성공)
 
 |파라미터| 타입     |필수여부|설명  |
 |------|--------|------|------|
 |schedule_id | INT    |O     |일정 고유번호  |
-| user_id  | INT    |O     |작성자 |
+| user_id  | INT    |O     |작성자 고유번호 |
 |title | String |O     |제목   |
-|content  | String |X     |내용   |
-|created_At| DATE |O     |생성 날짜 |
-|updated_At| DATE |X     |수정 날짜 |
+|content  | String |O     |내용   |
+|created_At| String |O     |생성 날짜 |
+|updated_At| String |X     |수정 날짜 |
 
   ```json
   {
@@ -425,6 +464,16 @@
     "created_At": "2024-11-06"
     }
 ```
+
+- Example response (실패)
+
+```
+{
+    "errorCode": 400,
+    "message": "올바른 ID값이 아닙니다."
+}
+```
+
 </div>
 </details>
 
@@ -442,7 +491,7 @@
  | 파라미터     | 타입     |필수여부|설명  |
  |----------|--------|------|------|
  | title    | String |O     |제목   |
- | content  | String |X     |내용   |
+ | content  | String |O     |내용   |
  | password | String |O     |비밀번호   |
 
  ```json
@@ -454,14 +503,14 @@
 ```
 - Example response (성공)
 
-|파라미터| 타입     |필수여부|설명  |
-|------|--------|------|------|
-|schedule_id | INT    |O     |일정 고유번호  |
-| user_id  | INT    |O     |작성자 |
-|title | String |O     |제목   |
-|content  | String |X     |내용   |
-|created_At| DATE |O     |생성 날짜 |
-|updated_At| DATE |X     |수정 날짜 |
+|파라미터| 타입     |필수여부| 설명       |
+|------|--------|------|----------|
+|schedule_id | INT    |O     | 일정 고유번호  |
+| user_id  | INT    |O     | 작성자 고유번호 |
+|title | String |O     | 제목       |
+|content  | String |O     | 내용       |
+|created_At| String |O     | 생성 날짜    |
+|updated_At| String |X     | 수정 날짜    |
 
   ```json
   {
@@ -494,8 +543,85 @@
 ```
 
 ```
+- Example response (실패)
+
+```
+{
+    "errorCode": 400,
+    "message": "비밀번호가 일치 하지 않습니다."
+}
+```
 </div>
 </details>
+
+
+
+
+
+<details>
+<summary>GET 페이지네이션 일정 조회</summary>
+<div markdown="1">       
+
+/api/schedules/{schedule_id}
+- Requset
+ ```
+  api/pages?page=1&size=3;
+  ```
+
+|파라미터| 타입  |필수여부| 설명     |
+ |------|-----|------|--------|
+|page    | INT |O     | 페이지 번호 |
+|size    | INT |O     | 크기     |
+
+- Example response (성공)
+
+| 파라미터        | 타입     |필수여부| 설명       |
+|-------------|--------|------|----------|
+| schedule_id | INT    |O     | 일정 고유번호  |
+| user_id     | INT    |O     | 작성자 고유번호 |
+| username    | INT    |O     | 작성자명     |
+| title       | String |O     | 제목       |
+| content     | String |O     | 내용       |
+ | created_At  | String |O     | 생성 날짜    |
+| updated_At  | String |X     | 수정 날짜    |
+
+
+```
+[
+    {
+        "scheduleId": 1,
+        "title": "제목1",
+        "userId": 1,
+        "username": "작성자명",
+        "content": "내용",
+        "createdAt": "2024-11-08",
+        "updatedAt": null
+    },
+    {
+        "scheduleId": 2,
+        "title": "제목2",
+        "userId": 2,
+        "username": "작성자명",
+        "content": "내용",
+        "createdAt": "2024-11-08",
+        "updatedAt": null
+    },
+    {
+        "scheduleId": 3,
+        "title": "제목3",
+        "userId": 2,
+        "username": "작성자명",
+        "content": "내용",
+        "createdAt": "2024-11-07",
+        "updatedAt": null
+    }
+]
+
+```
+
+</div>
+</details>
+
 
 
 
