@@ -267,7 +267,7 @@
 |GET|/api/schedules|전체 일정을 가져옴|
 |GET|/api/schedules/{schedule_id}|상세 일정을 가져옴|
 |PUT|/api/schedules/{schedule_id}|일정을 변경|
-|DELETE|/api/schedules/{schedule_id}?password = "입력값 "|일정을 삭제|
+|DELETE|/api/schedules/{schedule_id}?password = 입력값 |일정을 삭제|
 |GET|/api/pages?pages=입력값&size=입력값값|페이지별 조회|
 
 사용자 API
@@ -546,10 +546,10 @@
 <summary>DELETE 일정 삭제</summary>
 <div markdown="1">       
 
-/api/schedules/{schedule_id}
+/api/schedules/{schedule_id}?password=비밀번호
 - Requset
  ```
-  api/schedules/1?password="비밀번호"
+  api/schedules/1?password=1234
   ```
 
 |파라미터| 타입  |필수여부|설명  |
@@ -585,7 +585,7 @@
 <summary>GET 페이지네이션 일정 조회</summary>
 <div markdown="1">       
 
-/api/schedules/{schedule_id}
+/api/schedules/{schedule_id}?page = 입력값 1 & size=입력값값
 - Requset
  ```
   api/pages?page=1&size=3;
@@ -644,10 +644,6 @@
 
 </div>
 </details>
-
-
-
-
 
 
 ## ERD
