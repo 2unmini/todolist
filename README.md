@@ -5,11 +5,11 @@
 
 |Method|EndPoint|Desc|
 |------|---|---|
-|<span style="color:gray">POST</span>|/api/schedules|새로운 일정 생성|
-|<span style="color:blue">GET</span>|/api/schedules|전체 일정을 가져옴|
-|<span style="color:blue">GET</span>|/api/schedules/{schedule_id}|상세 일정을 가져옴|
-|<span style="color:purple">PUT</span>|/api/schedules/{schedule_id}|일정을 변경|
-|<span style="color:red">DELETE</span>|/api/schedules/{schedule_id}|일정을 삭제|
+|POST|/api/schedules|새로운 일정 생성|
+|GET|/api/schedules|전체 일정을 가져옴|
+|GET|/api/schedules/{schedule_id}|상세 일정을 가져옴|
+|PUT|/api/schedules/{schedule_id}|일정을 변경|
+|DELETE|/api/schedules/{schedule_id}|일정을 삭제|
 
 
 <details>
@@ -260,6 +260,23 @@
 
 
 ## 도전과제 일정관리 API
+
+|Method|EndPoint|Desc|
+|------|---|---|
+|POST|/api/schedules|새로운 일정 생성|
+|GET|/api/schedules|전체 일정을 가져옴|
+|GET|/api/schedules/{schedule_id}|상세 일정을 가져옴|
+|PUT|/api/schedules/{schedule_id}|일정을 변경|
+|DELETE|/api/schedules/{schedule_id}|일정을 삭제|
+|GET|/api/pages?pages=?&size=?|페이지별 조회|
+
+사용자 API
+
+|Method|EndPoint| Desc           |
+|------|---|----------------|
+|POST|/api/users| 새로운 사용자 생성     |
+|GET|/api/schedules/{schedule_id}| 상세 사용자 정보를 가져옴 |
+|PUT|/api/schedules/{schedule_id}| 일정을 변경         |
 
 <details>
 <summary>POST 사용자 생성</summary>
