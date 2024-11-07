@@ -1,5 +1,6 @@
 package com.example.todolist.repository;
 
+import com.example.todolist.dto.UserRequestDto;
 import com.example.todolist.dto.UserResponseDto;
 import com.example.todolist.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -43,6 +44,11 @@ public class JdbcUserRepository implements UserRepository {
     public Optional<User> findUserById(Long id) {
         List<User> userList = jdbcTemplate.query("select * from user where user_id = ?", userRowMapper(), id);
         return userList.stream().findAny();
+    }
+
+    @Override
+    public int updateUserName(Long id ,UserRequestDto userRequestDto) {
+        return jdbcTemplate.update("update user set user_name = ?, email =? where user_id =?",userRequestDto.getUserName(),userRequestDto.getEmail(),id);
     }
 
     private RowMapper<User> userRowMapper() {

@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface UserService {
     UserResponseDto saveUser(UserRequestDto userRequestDto);
     Optional<User> findUserById(Long id);
+
+    UserResponseDto updateUserName(Long id,UserRequestDto userRequestDto);
 }

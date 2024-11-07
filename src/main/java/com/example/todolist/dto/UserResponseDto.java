@@ -1,5 +1,6 @@
 package com.example.todolist.dto;
 
+import com.example.todolist.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -18,6 +19,13 @@ public class UserResponseDto {
         this.userName=userName;
         this.email=email;
         this.createdAt=createdAt;
+    }
+    public UserResponseDto(User user) {
+        this.userId=user.getUserId();
+        this.userName=user.getUserName();
+        this.email = user.getEmail();
+        this.createdAt=user.getCreatedAt();
+        this.updatedAt=LocalDate.now();
     }
 
 }

@@ -26,4 +26,10 @@ public class UserController {
     public Optional<User> findUserById(@PathVariable Long id) {
         return userService.findUserById(id);
     }
+    @PutMapping("/users/{id}")
+    public UserResponseDto updateUserName(@PathVariable Long id ,@RequestBody UserRequestDto userRequestDto) {
+        return userService.updateUserName(id,userRequestDto);
+
+    }
+
 }
