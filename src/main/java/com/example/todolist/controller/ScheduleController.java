@@ -42,8 +42,8 @@ public class ScheduleController {
     }
 
     @DeleteMapping("/schedules/{id}") // 일정 삭제 요청 API
-    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id, @RequestBody @Valid ScheduleRequestDto requestDto) {
-        scheduleService.deleteSchedule(id, requestDto.getPassword());
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id, @RequestParam String password) {
+        scheduleService.deleteSchedule(id,password);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

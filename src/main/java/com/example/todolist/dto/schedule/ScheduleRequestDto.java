@@ -10,6 +10,7 @@ public class ScheduleRequestDto {
     private String title; //제목
     private Long userId; // user 테이블의 식별자 값
     @Size(max = 200)
+    @NotBlank
     private String content; // 할일 (필수값 , 최대길이 200)
     @NotBlank
     private String password; // 비밀번호 (필수값)
