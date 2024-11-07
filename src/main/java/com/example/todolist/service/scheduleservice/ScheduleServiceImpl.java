@@ -1,14 +1,14 @@
-package com.example.todolist.service;
+package com.example.todolist.service.scheduleservice;
 
-import com.example.todolist.dto.ScheduleRequestDto;
-import com.example.todolist.dto.ScheduleResponseDto;
+import com.example.todolist.dto.schedule.ScheduleRequestDto;
+import com.example.todolist.dto.schedule.ScheduleResponseDto;
 import com.example.todolist.dto.UserScheduleResponseDto;
 import com.example.todolist.entity.Schedule;
 import com.example.todolist.exception.NoInformationException;
 import com.example.todolist.exception.mismatchIdException;
 import com.example.todolist.exception.mismatchPasswordException;
-import com.example.todolist.repository.ScheduleRepository;
-import com.example.todolist.repository.UserRepository;
+import com.example.todolist.repository.schedulerepository.ScheduleRepository;
+import com.example.todolist.repository.userrepository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,7 +25,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     public ScheduleServiceImpl(ScheduleRepository scheduleRepository, UserRepository userRepository) {
         this.scheduleRepository = scheduleRepository;
-        this.userRepository =userRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -41,23 +41,23 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Optional<Schedule> findScheduleById(Long id) { // 받은 @PathVariable id를  repository로 전달
-        Optional<Schedule> scheduleById = Optional.ofNullable(scheduleRepository.findScheduleById(id).orElseThrow(() -> new mismatchIdException()));
-        return scheduleById;// repository에서 받은 응답데이터를 controller로 전달
+    public ScheduleResponseDto findScheduleById(Long id) { // 받은 @PathVariable id를  repository로 전달
+        Optional<Schedule> schedule = Optional.ofNullable(scheduleRepository.findScheduleById(id).orElseThrow(() -> new mismatchIdException()));
+        ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto(schedule.get());
+        return scheduleResponseDto;// repository에서 받은 응답데이터를 controller로 전달
 
     }
 
     @Override
     public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto scheduleRequestDto) { // 요청 BODY -> Entity로 변환 후 repository로 전달
+
         if (scheduleRequestDto.getTitle() == null || scheduleRequestDto.getContent() == null || scheduleRequestDto.getPassword() == null) { // 각 값이 null인지 검사
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        /* if(scheduleRepository.findByPassword(id, scheduleRequestDto.getPassword())==0){
-             throw new mismatchPasswordException();
-         }*/
-        int password = scheduleRepository.findPassword(id, scheduleRequestDto.getPassword());
-        if(password==0) {
-            throw new mismatchPasswordException();
+
+        int password = scheduleRepository.findPassword(id, scheduleRequestDto.getPassword()); // 패스워드를 확인
+        if (password == 0) {
+            throw new mismatchPasswordException(); // password가 없다면 0을 반환후 에러 반환
         }
 
         Schedule schedule = scheduleRepository.findScheduleById(id).get();
@@ -65,7 +65,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         if (updateRow == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND); // repository에서 응답된 값이 0인지 확인 (0이 아니어야 한다.)
         }
-         schedule = scheduleRepository.findScheduleById(id).get();
+        schedule = scheduleRepository.findScheduleById(id).get();
         return new ScheduleResponseDto(schedule); // entity를 응답데이터로 변환 후 controller로 전달
     }
 
@@ -74,18 +74,18 @@ public class ScheduleServiceImpl implements ScheduleService {
         int passwordValues = scheduleRepository.findPassword(id, password);
         /*todo*/
 
-        if(passwordValues==0) {
+        if (passwordValues == 0) {
             throw new mismatchPasswordException();
         }
 
-        if(scheduleRepository.deleteSchedule(id, password)==0){
+        if (scheduleRepository.deleteSchedule(id, password) == 0) {
             throw new NoInformationException();
         }
     }
 
     @Override
-    public List<UserScheduleResponseDto> findByPage(int pageNum, int pageSize) {
-        return scheduleRepository.findByPage(pageNum ,pageSize);
+    public List<UserScheduleResponseDto> findByPage(int pageNum, int pageSize) { //요청 Requestparams ->repository로 전달
+        return scheduleRepository.findByPage(pageNum, pageSize);
     }
 
 }

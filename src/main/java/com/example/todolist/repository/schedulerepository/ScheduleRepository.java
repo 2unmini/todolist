@@ -1,6 +1,6 @@
-package com.example.todolist.repository;
+package com.example.todolist.repository.schedulerepository;
 
-import com.example.todolist.dto.ScheduleResponseDto;
+import com.example.todolist.dto.schedule.ScheduleResponseDto;
 import com.example.todolist.dto.UserScheduleResponseDto;
 import com.example.todolist.entity.Schedule;
 

@@ -1,18 +1,15 @@
 package com.example.todolist.controller;
 
-import com.example.todolist.dto.ScheduleRequestDto;
-import com.example.todolist.dto.ScheduleResponseDto;
+import com.example.todolist.dto.schedule.ScheduleRequestDto;
+import com.example.todolist.dto.schedule.ScheduleResponseDto;
 import com.example.todolist.dto.UserScheduleResponseDto;
-import com.example.todolist.entity.Schedule;
-import com.example.todolist.service.ScheduleService;
+import com.example.todolist.service.scheduleservice.ScheduleService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api")
@@ -25,17 +22,17 @@ public class ScheduleController {
 
     @PostMapping("/schedules") // 일정 생성 요청 API
     public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody @Valid ScheduleRequestDto requestDto) {
-        return new ResponseEntity<>(scheduleService.saveSchedule(requestDto),HttpStatus.CREATED);
+        return new ResponseEntity<>(scheduleService.saveSchedule(requestDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/schedules") // 일정 전체 조회 요청 API
-    public ResponseEntity<List<ScheduleResponseDto>>findAllSchedules() {
-        return new ResponseEntity<>(scheduleService.findAllSchedules(),HttpStatus.OK);
+    public ResponseEntity<List<ScheduleResponseDto>> findAllSchedules() {
+        return new ResponseEntity<>(scheduleService.findAllSchedules(), HttpStatus.OK);
     }
 
     @GetMapping("/schedules/{id}") // 일정 단건 조회 요청 API
-    public ResponseEntity<Optional<Schedule>> findScheduleById(@PathVariable Long id) {
-        return new ResponseEntity<>(scheduleService.findScheduleById(id),HttpStatus.OK);
+    public ResponseEntity<ScheduleResponseDto> findScheduleById(@PathVariable Long id) {
+        return new ResponseEntity<>(scheduleService.findScheduleById(id), HttpStatus.OK);
     }
 
     @PutMapping("/schedules/{id}") //일정 수정 요청 API
@@ -50,9 +47,9 @@ public class ScheduleController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/pages")
+    @GetMapping("/pages") //요청 페이지별 조회 API
     public ResponseEntity<List<UserScheduleResponseDto>> findByPage(@RequestParam Integer page, @RequestParam Integer size) {
-        return new ResponseEntity<>(scheduleService.findByPage(page,size),HttpStatus.OK);
+        return new ResponseEntity<>(scheduleService.findByPage(page, size), HttpStatus.OK);
 
     }
 

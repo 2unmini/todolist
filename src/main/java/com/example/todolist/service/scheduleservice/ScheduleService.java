@@ -1,12 +1,10 @@
-package com.example.todolist.service;
+package com.example.todolist.service.scheduleservice;
 
-import com.example.todolist.dto.ScheduleRequestDto;
-import com.example.todolist.dto.ScheduleResponseDto;
+import com.example.todolist.dto.schedule.ScheduleRequestDto;
+import com.example.todolist.dto.schedule.ScheduleResponseDto;
 import com.example.todolist.dto.UserScheduleResponseDto;
-import com.example.todolist.entity.Schedule;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ScheduleService {
 
@@ -14,7 +12,7 @@ public interface ScheduleService {
 
     List<ScheduleResponseDto> findAllSchedules();
 
-    Optional<Schedule> findScheduleById(Long id);
+    ScheduleResponseDto findScheduleById(Long id);
 
     ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto);
 

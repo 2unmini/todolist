@@ -1,6 +1,6 @@
-package com.example.todolist.repository;
+package com.example.todolist.repository.schedulerepository;
 
-import com.example.todolist.dto.ScheduleResponseDto;
+import com.example.todolist.dto.schedule.ScheduleResponseDto;
 import com.example.todolist.dto.UserScheduleResponseDto;
 import com.example.todolist.entity.Schedule;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,7 +24,7 @@ public class JdbcScheduleRepository implements ScheduleRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public JdbcScheduleRepository(DataSource dataSource) {
+    public JdbcScheduleRepository(DataSource dataSource) { // application.properties에서 설정한 Datasource 가져와 JDBCTemplate의 주입
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
@@ -32,7 +32,7 @@ public class JdbcScheduleRepository implements ScheduleRepository {
     public ScheduleResponseDto saveSchedule(Schedule schedule) { // DB에 INSERT
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 
-        jdbcInsert.withTableName("schedule").usingGeneratedKeyColumns("schedule_id").usingColumns("title","user_id","content","password","created_at");
+        jdbcInsert.withTableName("schedule").usingGeneratedKeyColumns("schedule_id").usingColumns("title", "user_id", "content", "password", "created_at");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("title", schedule.getTitle());
         parameters.put("user_id", schedule.getUserId());
@@ -60,21 +60,22 @@ public class JdbcScheduleRepository implements ScheduleRepository {
 
     @Override
     public int updateSchedule(Long id, String title, Long userId, String content, String password) { //DB에 맞는 조건을 걸어 update
-        return jdbcTemplate.update("update schedule set title =?,content =? ,updated_at = ?  where schedule_id =? and password = ?", title,content, LocalDate.now(), id, password);
+        return jdbcTemplate.update("update schedule set title =?,content =? ,updated_at = ?  where schedule_id =? and password = ?", title, content, LocalDate.now(), id, password);
     }
+
     @Override
     public int deleteSchedule(Long id, String password) { //DB에 맞는 조건을 걸어 delete
         return jdbcTemplate.update("delete from schedule where schedule_id = ? and password = ?", id, password);
     }
 
     @Override
-    public List<UserScheduleResponseDto> findByPage(int pageNum, int pageSize) {
-        return jdbcTemplate.query("select * from schedule ,user limit ?,?",UserScheduleRowMapper(),(pageNum-1)*pageSize,pageSize);
+    public List<UserScheduleResponseDto> findByPage(int pageNum, int pageSize) { //원하는 크기에 따라 보여줄 페이지번호와 보여줄 페이지 크기 DB에 select
+        return jdbcTemplate.query("select * from schedule ,user limit ?,?", UserScheduleRowMapper(), (pageNum - 1) * pageSize, pageSize);
     }
 
     @Override
-    public int findPassword(Long id, String password) {
-       return jdbcTemplate.queryForObject("select count(*) from schedule where schedule_id = ? and password =?",new Object[]{id,password},Integer.class);
+    public int findPassword(Long id, String password) { // 비번이 맞는지 확인하는 기능
+        return jdbcTemplate.queryForObject("select count(*) from schedule where schedule_id = ? and password =?", new Object[]{id, password}, Integer.class);
     }
 
 
