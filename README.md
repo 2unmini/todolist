@@ -267,8 +267,8 @@
 |GET|/api/schedules|전체 일정을 가져옴|
 |GET|/api/schedules/{schedule_id}|상세 일정을 가져옴|
 |PUT|/api/schedules/{schedule_id}|일정을 변경|
-|DELETE|/api/schedules/{schedule_id}|일정을 삭제|
-|GET|/api/pages?pages=?&size=?|페이지별 조회|
+|DELETE|/api/schedules/{schedule_id}?password = "입력값 "|일정을 삭제|
+|GET|/api/pages?pages=입력값&size=입력값값|페이지별 조회|
 
 사용자 API
 
@@ -549,7 +549,7 @@
 /api/schedules/{schedule_id}
 - Requset
  ```
-  api/schedules/1 
+  api/schedules/1?password="비밀번호"
   ```
 
 |파라미터| 타입  |필수여부|설명  |
@@ -566,6 +566,12 @@
 {
     "errorCode": 400,
     "message": "비밀번호가 일치 하지 않습니다."
+}
+```
+```
+{
+    "errorCode": 404,
+    "message": "이미 삭제되었거나 없는 정보 입니다"
 }
 ```
 </div>
