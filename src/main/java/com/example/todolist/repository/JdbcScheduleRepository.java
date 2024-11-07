@@ -63,14 +63,20 @@ public class JdbcScheduleRepository implements ScheduleRepository {
         return jdbcTemplate.update("update schedule set title =?,content =? ,updated_at = ?  where schedule_id =? and password = ?", title,content, LocalDate.now(), id, password);
     }
     @Override
-    public void deleteSchedule(Long id, String password) { //DB에 맞는 조건을 걸어 delete
-        jdbcTemplate.update("delete from schedule where schedule_id = ? and password = ?", id, password);
+    public int deleteSchedule(Long id, String password) { //DB에 맞는 조건을 걸어 delete
+        return jdbcTemplate.update("delete from schedule where schedule_id = ? and password = ?", id, password);
     }
 
     @Override
     public List<UserScheduleResponseDto> findByPage(int pageNum, int pageSize) {
-        return jdbcTemplate.query("select * from schedule,user limit ?,?",UserScheduleRowMapper(),(pageNum-1)*pageSize,pageSize);
+        return jdbcTemplate.query("select * from schedule ,user limit ?,?",UserScheduleRowMapper(),(pageNum-1)*pageSize,pageSize);
     }
+
+    @Override
+    public int findPassword(Long id, String password) {
+       return jdbcTemplate.queryForObject("select count(*) from schedule where schedule_id = ? and password =?",new Object[]{id,password},Integer.class);
+    }
+
 
     private RowMapper<UserScheduleResponseDto> UserScheduleRowMapper() {
         return new RowMapper<UserScheduleResponseDto>() {

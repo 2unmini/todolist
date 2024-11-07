@@ -4,6 +4,9 @@ import com.example.todolist.dto.ScheduleRequestDto;
 import com.example.todolist.dto.ScheduleResponseDto;
 import com.example.todolist.dto.UserScheduleResponseDto;
 import com.example.todolist.entity.Schedule;
+import com.example.todolist.exception.NoInformationException;
+import com.example.todolist.exception.mismatchIdException;
+import com.example.todolist.exception.mismatchPasswordException;
 import com.example.todolist.repository.ScheduleRepository;
 import com.example.todolist.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -39,7 +42,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public Optional<Schedule> findScheduleById(Long id) { // 받은 @PathVariable id를  repository로 전달
-        return scheduleRepository.findScheduleById(id);// repository에서 받은 응답데이터를 controller로 전달
+        Optional<Schedule> scheduleById = Optional.ofNullable(scheduleRepository.findScheduleById(id).orElseThrow(() -> new mismatchIdException()));
+        return scheduleById;// repository에서 받은 응답데이터를 controller로 전달
 
     }
 
@@ -48,6 +52,14 @@ public class ScheduleServiceImpl implements ScheduleService {
         if (scheduleRequestDto.getTitle() == null || scheduleRequestDto.getContent() == null || scheduleRequestDto.getPassword() == null) { // 각 값이 null인지 검사
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+        /* if(scheduleRepository.findByPassword(id, scheduleRequestDto.getPassword())==0){
+             throw new mismatchPasswordException();
+         }*/
+        int password = scheduleRepository.findPassword(id, scheduleRequestDto.getPassword());
+        if(password==0) {
+            throw new mismatchPasswordException();
+        }
+
         Schedule schedule = scheduleRepository.findScheduleById(id).get();
         int updateRow = scheduleRepository.updateSchedule(schedule.getScheduleId(), scheduleRequestDto.getTitle(), scheduleRequestDto.getUserId(), scheduleRequestDto.getContent(), scheduleRequestDto.getPassword());
         if (updateRow == 0) {
@@ -58,8 +70,17 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void deleteSchedule(Long id, String password) { // 요청 BODY ->  repository로 전달
-        scheduleRepository.deleteSchedule(id, password);
+    public void deleteSchedule(Long id, String password) {// 요청 BODY ->  repository로 전달
+        int passwordValues = scheduleRepository.findPassword(id, password);
+        /*todo*/
+
+        if(passwordValues==0) {
+            throw new mismatchPasswordException();
+        }
+
+        if(scheduleRepository.deleteSchedule(id, password)==0){
+            throw new NoInformationException();
+        }
     }
 
     @Override

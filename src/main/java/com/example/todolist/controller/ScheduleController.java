@@ -22,18 +22,18 @@ public class ScheduleController {
     }
 
     @PostMapping("/schedules") // 일정 생성 요청 API
-    public ScheduleResponseDto createSchedule(@RequestBody ScheduleRequestDto requestDto) {
-        return scheduleService.saveSchedule(requestDto);
+    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto requestDto) {
+        return new ResponseEntity<>(scheduleService.saveSchedule(requestDto),HttpStatus.CREATED);
     }
 
     @GetMapping("/schedules") // 일정 전체 조회 요청 API
-    public List<ScheduleResponseDto> findAllSchedules() {
-        return scheduleService.findAllSchedules();
+    public ResponseEntity<List<ScheduleResponseDto>>findAllSchedules() {
+        return new ResponseEntity<>(scheduleService.findAllSchedules(),HttpStatus.OK);
     }
 
     @GetMapping("/schedules/{id}") // 일정 단건 조회 요청 API
-    public Optional<Schedule> findScheduleById(@PathVariable Long id) {
-        return scheduleService.findScheduleById(id);
+    public ResponseEntity<Optional<Schedule>> findScheduleById(@PathVariable Long id) {
+        return new ResponseEntity<>(scheduleService.findScheduleById(id),HttpStatus.OK);
     }
 
     @PutMapping("/schedules/{id}") //일정 수정 요청 API
@@ -43,13 +43,14 @@ public class ScheduleController {
     }
 
     @DeleteMapping("/schedules/{id}") // 일정 삭제 요청 API
-    public void deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
         scheduleService.deleteSchedule(id, requestDto.getPassword());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/pages")
-    public List<UserScheduleResponseDto> findByPage(@RequestParam Integer page, @RequestParam Integer size) {
-        return scheduleService.findByPage(page,size);
+    public ResponseEntity<List<UserScheduleResponseDto>> findByPage(@RequestParam Integer page, @RequestParam Integer size) {
+        return new ResponseEntity<>(scheduleService.findByPage(page,size),HttpStatus.OK);
 
     }
 
