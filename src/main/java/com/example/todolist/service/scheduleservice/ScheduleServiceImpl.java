@@ -4,6 +4,7 @@ import com.example.todolist.dto.schedule.ScheduleRequestDto;
 import com.example.todolist.dto.schedule.ScheduleResponseDto;
 import com.example.todolist.dto.UserScheduleResponseDto;
 import com.example.todolist.entity.Schedule;
+import com.example.todolist.entity.User;
 import com.example.todolist.exception.NoInformationException;
 import com.example.todolist.exception.mismatchIdException;
 import com.example.todolist.exception.mismatchPasswordException;
@@ -70,17 +71,20 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void deleteSchedule(Long id, String password) {// 요청 BODY ->  repository로 전달
-        int passwordValues = scheduleRepository.findPassword(id, password);
-        /*todo*/
+    public void deleteSchedule(Long id, String password) { // 요청 BODY ->  repository로 전달
 
-        if (passwordValues == 0) {
-            throw new mismatchPasswordException();
+
+        Schedule schedule = scheduleRepository.findScheduleById(id).orElseThrow(() -> new NoInformationException()); // 요청한 id의 schedule이 있으면 schedule을 없으면 에러를 반환
+
+        int passwordValue = scheduleRepository.findPassword(id, password); // 패스워드를 확인
+
+        if (passwordValue == 0) {
+            throw new mismatchPasswordException(); // password가 없다면 0을 반환후 에러 반환
         }
 
-        if (scheduleRepository.deleteSchedule(id, password) == 0) {
-            throw new NoInformationException();
-        }
+        scheduleRepository.deleteSchedule(schedule.getScheduleId()); // 삭제
+
+
     }
 
     @Override

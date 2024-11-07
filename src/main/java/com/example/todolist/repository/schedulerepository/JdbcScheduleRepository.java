@@ -64,8 +64,8 @@ public class JdbcScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public int deleteSchedule(Long id, String password) { //DB에 맞는 조건을 걸어 delete
-        return jdbcTemplate.update("delete from schedule where schedule_id = ? and password = ?", id, password);
+    public int deleteSchedule(Long id) { //DB에 맞는 조건을 걸어 delete
+        return jdbcTemplate.update("delete from schedule where schedule_id = ?", id);
     }
 
     @Override
@@ -107,12 +107,14 @@ public class JdbcScheduleRepository implements ScheduleRepository {
                         rs.getString("title"),
                         rs.getLong("user_id"),
                         rs.getString("content"),
+                        rs.getString("password"),
                         rs.getDate("created_at").toLocalDate(),
                         Optional.ofNullable(rs.getDate("updated_at")).map(Date::toLocalDate).orElse(null)
                 );
             }
         };
     }
+
 
     private RowMapper<ScheduleResponseDto> scheduleRowMapper() {
         return new RowMapper<ScheduleResponseDto>() {

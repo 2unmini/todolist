@@ -26,22 +26,4 @@ public class Schedule {
         this.createdAt = createdAt;
     }
 
-    public Schedule(long scheduleId, String title, Long userId, String content, LocalDate createdAt, LocalDate updatedAt) {
-        this.scheduleId = scheduleId;
-        this.title = title;
-        this.userId = userId;
-        this.content = content;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-
-    public Schedule(Long id, String title, Long userId, String content, String password, LocalDate updatedAt) {
-        this.scheduleId = id;
-        this.title = title;
-        this.userId = userId;
-        this.content = content;
-        this.password = password;
-        this.updatedAt = updatedAt;
-    }
 }

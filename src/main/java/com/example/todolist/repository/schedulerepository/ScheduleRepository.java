@@ -17,7 +17,7 @@ public interface ScheduleRepository {
 
     int updateSchedule(Long id, String title, Long userId, String content, String password);
 
-    int deleteSchedule(Long id, String password);
+    int deleteSchedule(Long id);
 
     List<UserScheduleResponseDto> findByPage(int pageNum, int pageSize);
 
