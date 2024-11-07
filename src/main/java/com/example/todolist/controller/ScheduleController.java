@@ -5,8 +5,10 @@ import com.example.todolist.dto.ScheduleResponseDto;
 import com.example.todolist.dto.UserScheduleResponseDto;
 import com.example.todolist.entity.Schedule;
 import com.example.todolist.service.ScheduleService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public class ScheduleController {
     }
 
     @PostMapping("/schedules") // 일정 생성 요청 API
-    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto requestDto) {
+    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody @Valid ScheduleRequestDto requestDto) {
         return new ResponseEntity<>(scheduleService.saveSchedule(requestDto),HttpStatus.CREATED);
     }
 
@@ -37,13 +39,13 @@ public class ScheduleController {
     }
 
     @PutMapping("/schedules/{id}") //일정 수정 요청 API
-    public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
+    public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable Long id, @RequestBody @Valid ScheduleRequestDto requestDto) {
         return new ResponseEntity<>(scheduleService.updateSchedule(id, requestDto), HttpStatus.OK);
 
     }
 
     @DeleteMapping("/schedules/{id}") // 일정 삭제 요청 API
-    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id, @RequestBody @Valid ScheduleRequestDto requestDto) {
         scheduleService.deleteSchedule(id, requestDto.getPassword());
         return new ResponseEntity<>(HttpStatus.OK);
     }

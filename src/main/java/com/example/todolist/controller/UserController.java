@@ -4,6 +4,7 @@ import com.example.todolist.dto.UserRequestDto;
 import com.example.todolist.dto.UserResponseDto;
 import com.example.todolist.entity.User;
 import com.example.todolist.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -17,7 +18,7 @@ public class UserController {
         this.userService = userService;
     }
     @PostMapping("/users")
-    public UserResponseDto createUser(@RequestBody UserRequestDto userRequestDto){
+    public UserResponseDto createUser(@RequestBody @Valid UserRequestDto userRequestDto){
         return userService.saveUser(userRequestDto);
 
     }
