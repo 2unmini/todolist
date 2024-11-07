@@ -1,8 +1,9 @@
 package com.example.todolist.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-
 import java.time.LocalDate;
+@AllArgsConstructor
 @Getter
 public class User {
     private Long userId;

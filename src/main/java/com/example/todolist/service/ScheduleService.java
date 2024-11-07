@@ -2,6 +2,7 @@ package com.example.todolist.service;
 
 import com.example.todolist.dto.ScheduleRequestDto;
 import com.example.todolist.dto.ScheduleResponseDto;
+import com.example.todolist.dto.UserScheduleResponseDto;
 import com.example.todolist.entity.Schedule;
 
 import java.util.List;
@@ -18,5 +19,7 @@ public interface ScheduleService {
     ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto);
 
     void deleteSchedule(Long id, String password);
+
+    List<UserScheduleResponseDto> findByPage(int pageNum, int pageSize);
 
 }

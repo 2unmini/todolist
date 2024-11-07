@@ -7,6 +7,7 @@ import com.example.todolist.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -21,5 +22,11 @@ public class UserServiceImpl implements UserService{
     public UserResponseDto saveUser(UserRequestDto userRequestDto) {
         User user = new User(userRequestDto.getUserName(), userRequestDto.getEmail(), LocalDate.now());
         return userRepository.saveUser(user);
+    }
+
+    @Override
+    public Optional<User> findUserById(Long id) {
+
+        return userRepository.findUserById(id);
     }
 }

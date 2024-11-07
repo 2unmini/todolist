@@ -2,6 +2,7 @@ package com.example.todolist.controller;
 
 import com.example.todolist.dto.ScheduleRequestDto;
 import com.example.todolist.dto.ScheduleResponseDto;
+import com.example.todolist.dto.UserScheduleResponseDto;
 import com.example.todolist.entity.Schedule;
 import com.example.todolist.service.ScheduleService;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,12 @@ public class ScheduleController {
     @DeleteMapping("/schedules/{id}") // 일정 삭제 요청 API
     public void deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
         scheduleService.deleteSchedule(id, requestDto.getPassword());
+    }
+
+    @GetMapping("/pages")
+    public List<UserScheduleResponseDto> findByPage(@RequestParam Integer page, @RequestParam Integer size) {
+        return scheduleService.findByPage(page,size);
+
     }
 
 }

@@ -1,8 +1,10 @@
 package com.example.todolist.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDate;
+@AllArgsConstructor
 @Getter
 public class UserResponseDto {
     private Long userId;
