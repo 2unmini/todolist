@@ -3,11 +3,11 @@ package com.example.todolist.service.scheduleservice;
 import com.example.todolist.dto.schedule.ScheduleRequestDto;
 import com.example.todolist.dto.schedule.ScheduleResponseDto;
 import com.example.todolist.dto.UserScheduleResponseDto;
+import com.example.todolist.entity.Paging;
 import com.example.todolist.entity.Schedule;
-import com.example.todolist.entity.User;
 import com.example.todolist.exception.NoInformationException;
-import com.example.todolist.exception.mismatchIdException;
-import com.example.todolist.exception.mismatchPasswordException;
+import com.example.todolist.exception.MismatchIdException;
+import com.example.todolist.exception.MismatchPasswordException;
 import com.example.todolist.repository.schedulerepository.ScheduleRepository;
 import com.example.todolist.repository.userrepository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -43,7 +43,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public ScheduleResponseDto findScheduleById(Long id) { // 받은 @PathVariable id를  repository로 전달
-        Optional<Schedule> schedule = Optional.ofNullable(scheduleRepository.findScheduleById(id).orElseThrow(() -> new mismatchIdException()));
+        Optional<Schedule> schedule = Optional.ofNullable(scheduleRepository.findScheduleById(id).orElseThrow(() -> new MismatchIdException()));
         ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto(schedule.get());
         return scheduleResponseDto;// repository에서 받은 응답데이터를 controller로 전달
 
@@ -58,7 +58,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         int password = scheduleRepository.findPassword(id, scheduleRequestDto.getPassword()); // 패스워드를 확인
         if (password == 0) {
-            throw new mismatchPasswordException(); // password가 없다면 0을 반환후 에러 반환
+            throw new MismatchPasswordException(); // password가 없다면 0을 반환후 에러 반환
         }
 
         Schedule schedule = scheduleRepository.findScheduleById(id).get();
@@ -79,7 +79,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         int passwordValue = scheduleRepository.findPassword(id, password); // 패스워드를 확인
 
         if (passwordValue == 0) {
-            throw new mismatchPasswordException(); // password가 없다면 0을 반환후 에러 반환
+            throw new MismatchPasswordException(); // password가 없다면 0을 반환후 에러 반환
         }
 
         scheduleRepository.deleteSchedule(schedule.getScheduleId()); // 삭제
@@ -89,7 +89,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<UserScheduleResponseDto> findByPage(int pageNum, int pageSize) { //요청 Requestparams ->repository로 전달
-        return scheduleRepository.findByPage(pageNum, pageSize);
+        Paging paging = new Paging(pageNum, pageSize);
+        return scheduleRepository.findByPage(paging);
     }
 
 }

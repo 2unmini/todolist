@@ -2,6 +2,7 @@ package com.example.todolist.repository.schedulerepository;
 
 import com.example.todolist.dto.schedule.ScheduleResponseDto;
 import com.example.todolist.dto.UserScheduleResponseDto;
+import com.example.todolist.entity.Paging;
 import com.example.todolist.entity.Schedule;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -69,8 +70,8 @@ public class JdbcScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public List<UserScheduleResponseDto> findByPage(int pageNum, int pageSize) { //원하는 크기에 따라 보여줄 페이지번호와 보여줄 페이지 크기 DB에 select
-        return jdbcTemplate.query("select * from schedule ,user limit ?,?", UserScheduleRowMapper(), (pageNum - 1) * pageSize, pageSize);
+    public List<UserScheduleResponseDto> findByPage(Paging paging) { //원하는 크기에 따라 보여줄 페이지번호와 보여줄 페이지 크기 DB에 select
+        return jdbcTemplate.query("select * from schedule ,user limit ?,?", UserScheduleRowMapper(), (paging.getPage() - 1) * paging.getSize(), paging.getSize());
     }
 
     @Override

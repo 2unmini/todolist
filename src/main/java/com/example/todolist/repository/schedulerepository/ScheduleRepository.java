@@ -2,6 +2,7 @@ package com.example.todolist.repository.schedulerepository;
 
 import com.example.todolist.dto.schedule.ScheduleResponseDto;
 import com.example.todolist.dto.UserScheduleResponseDto;
+import com.example.todolist.entity.Paging;
 import com.example.todolist.entity.Schedule;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface ScheduleRepository {
 
     int deleteSchedule(Long id);
 
-    List<UserScheduleResponseDto> findByPage(int pageNum, int pageSize);
+    List<UserScheduleResponseDto> findByPage(Paging paging);
 
     int findPassword(Long id, String password);
 
